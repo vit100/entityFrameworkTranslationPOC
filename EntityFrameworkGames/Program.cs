@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
 using System.Linq;
-using System.Threading;
 
 namespace EntityFrameworkGames
 {
@@ -25,17 +23,15 @@ namespace EntityFrameworkGames
                             translation = t == null ? n.Name : t.Text,
                             table = t.TableName
                         };
-
-
                 foreach (var item in q)
                 {
                     Console.WriteLine(item.name + " -> " + item.translation);
                 }
                 Console.Read();
             }
-
-
         }
+
+        #region dbContext and config    
 
         public class MyContext : DbContext
         {
@@ -63,17 +59,13 @@ namespace EntityFrameworkGames
 
         class myConf : DropCreateDatabaseIfModelChanges<MyContext>
         {
-            public myConf()
-            {
-
-            }
             protected override void Seed(MyContext context)
             {
-                var numbers = new List<Number>() { new Number() { Name = "1", Order = 3 }, new Number() { Name = "2", Order = 2 }, new Number() { Name = "3", Order = 1 } };
-                var translations = new List<Translation>()
+                var numbers = new List<Number> { new Number { Name = "1", Order = 3 }, new Number { Name = "2", Order = 2 }, new Number { Name = "3", Order = 1 } };
+                var translations = new List<Translation>
                 {
-                    new Translation() {NumberId = 1, TableName = "Number", Text = "one"},
-                    new Translation() {NumberId = 2, TableName = "Number", Text = "two"}
+                    new Translation {NumberId = 1, TableName = "Number", Text = "one"},
+                    new Translation {NumberId = 2, TableName = "Number", Text = "two"}
                 };
                 context.Numbers.AddRange(numbers);
                 context.Translations.AddRange(translations);
@@ -81,6 +73,8 @@ namespace EntityFrameworkGames
 
             }
         }
+        #endregion
+
 
         public class Number
         {
